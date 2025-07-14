@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- PWA 테마 색상 -->
     <meta name="theme-color" content="#3498db"/>
-    <title>아기 갤러리</title>
+    <title>SION 갤러리</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- PWA 매니페스트 링크 -->
     <link rel="manifest" id="manifest">
     <!-- iOS 홈 화면 아이콘 -->
-    <link rel="apple-touch-icon" href="https://placehold.co/192x192/A9C9FF/FFFFFF?text=�">
+    <link rel="apple-touch-icon" href="https://placehold.co/192x192/A9C9FF/FFFFFF?text=🍼">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -178,8 +178,23 @@
         // 이 Canvas 환경에서 제공하는 임시 Firebase 설정을 사용합니다.
         const firebaseConfig = typeof __firebase_config !== 'undefined' 
             ? JSON.parse(__firebase_config) 
-            : { apiKey: "AIzaSyCe36cYwqNz1yJnjJ0zA1W4vGY7IIaWDOU", authDomain: "baby-sion.firebaseapp.com", projectId: "baby-sion" }; // 예비용
+            : { apiKey: "YOUR_API_KEY", authDomain: "YOUR_AUTH_DOMAIN", projectId: "YOUR_PROJECT_ID" }; // 예비용
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-gallery-app';
+        
+        /*
+        // 참고: 이전에 제공해주신 개인 Firebase 설정입니다.
+        // 이 설정을 사용하려면 Firebase 콘솔에서 'Authentication' -> 'Sign-in method'의
+        // '익명' 로그인 제공업체를 반드시 '사용 설정'해야 합니다.
+        const userFirebaseConfig = {
+            apiKey: "AIzaSyCe36cYwqNz1yJnjJ0zA1W4vGY7IIaWDOU",
+            authDomain: "baby-sion.firebaseapp.com",
+            projectId: "baby-sion",
+            storageBucket: "baby-sion.firebasestorage.app",
+            messagingSenderId: "1067320748533",
+            appId: "1:1067320748533:web:db3b5bf48df4b0607498bc",
+            measurementId: "G-7S6ZQNKVCJ"
+        };
+        */
         
         // Firebase 앱 초기화
         const app = initializeApp(firebaseConfig);
@@ -504,4 +519,3 @@
     </script>
 </body>
 </html>
-�
