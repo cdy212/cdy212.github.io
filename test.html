@@ -185,6 +185,7 @@
         // 참고: 이전에 제공해주신 개인 Firebase 설정입니다.
         // 이 설정을 사용하려면 Firebase 콘솔에서 'Authentication' -> 'Sign-in method'의
         // '익명' 로그인 제공업체를 반드시 '사용 설정'해야 합니다.
+        */
         const userFirebaseConfig = {
             apiKey: "AIzaSyCe36cYwqNz1yJnjJ0zA1W4vGY7IIaWDOU",
             authDomain: "baby-sion.firebaseapp.com",
@@ -194,10 +195,11 @@
             appId: "1:1067320748533:web:db3b5bf48df4b0607498bc",
             measurementId: "G-7S6ZQNKVCJ"
         };
-        */
+        
         
         // Firebase 앱 초기화
-        const app = initializeApp(firebaseConfig);
+        // const app = initializeApp(firebaseConfig);
+        const app = initializeApp(userFirebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
