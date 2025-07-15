@@ -123,6 +123,11 @@
                 </button>
             </div>
             <p id="uploadMessage" class="text-sm mt-2"></p>
+            <!-- FCM 토큰 표시 영역 -->
+            <div id="fcmTokenContainer" class="mt-4 p-4 bg-gray-50 rounded-lg hidden">
+                <label for="fcmTokenDisplay" class="block text-sm font-medium text-gray-700">발급된 FCM 토큰 (클립보드에 복사됨):</label>
+                <textarea id="fcmTokenDisplay" readonly class="w-full mt-1 p-2 border border-gray-300 rounded-md bg-gray-100 text-gray-600 text-xs break-all" rows="3"></textarea>
+            </div>
         </div>
 
         <!-- 로딩 인디케이터 -->
@@ -470,8 +475,11 @@
          * FCM 토큰 가져오기 테스트
          */
         async function handlePushTest() {
+            const fcmTokenContainer = document.getElementById('fcmTokenContainer');
+            const fcmTokenDisplay = document.getElementById('fcmTokenDisplay');
             uploadMessage.textContent = '';
             uploadMessage.className = 'text-sm mt-2';
+            fcmTokenContainer.classList.add('hidden');
 
             try {
                 const permission = await Notification.requestPermission();
@@ -481,12 +489,20 @@
                     // FCM 토큰 가져오기
                     // 중요: "YOUR_VAPID_KEY" 부분은 반드시 본인의 Firebase 프로젝트의 VAPID 키로 교체해야 합니다.
                     // 위치: Firebase 콘솔 > 프로젝트 설정 > 클라우드 메시징 > 웹 푸시 인증서 > 키 쌍
-                    const vapidKey = "BHaTug7CdAOocPLyRzMjszm25Lxc3zGoiQzMUd9pmqCpF8nxy-sN3R_18VUU7YBGquWJ0xfhqIyfcq6H9RAk3W0"; // <--- 이 부분을 실제 키로 교체하세요!
+                    const vapidKey = "BHaTug7CdAOocPLyRzMjszm25Lxc3zGoiQzMUd9pmqCpF8nxy-sN3R_18VUU7YBGquWJ0xfhqIyfcq6H9RAk3W0";
                     const currentToken = await getToken(messaging, { vapidKey: vapidKey });
 
                     if (currentToken) {
                         console.log('FCM 토큰:', currentToken);
-                        uploadMessage.textContent = 'FCM 토큰을 성공적으로 가져왔습니다. 개발자 콘솔(F12)을 확인하세요.';
+                        
+                        // 토큰 표시 및 복사
+                        fcmTokenDisplay.value = currentToken;
+                        fcmTokenContainer.classList.remove('hidden');
+                        fcmTokenDisplay.select();
+                        document.execCommand('copy');
+                        window.getSelection().removeAllRanges();
+
+                        uploadMessage.textContent = 'FCM 토큰이 클립보드에 복사되었고, 아래에 표시됩니다.';
                         uploadMessage.classList.add('text-green-500');
                     } else {
                         console.log('토큰을 받을 수 없습니다. 권한 또는 VAPID 키를 확인하세요.');
