@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- PWA 테마 색상 -->
     <meta name="theme-color" content="#3498db"/>
-    <title>아기 갤러리2</title>
+    <title>아기 갤러리</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- PWA 매니페스트 링크 -->
@@ -104,7 +104,7 @@
     <div id="app" class="container mx-auto p-4 md:p-6 max-w-6xl">
         
         <header class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">아기 갤러리2 🍼</h1>
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">아기 갤러리 🍼</h1>
             <p class="text-gray-500 mt-2">나만의 아기 이미지 모음</p>
         </header>
 
@@ -427,21 +427,18 @@
             const manifestUrl = URL.createObjectURL(manifestBlob);
             document.querySelector('#manifest').setAttribute('href', manifestUrl);
 
-            const swContent = `
-                self.addEventListener('install', (event) => { console.log('Service Worker installing.'); });
-                self.addEventListener('push', (event) => {
-                    const title = '새로운 소식이 도착했어요!';
-                    const options = {
-                        body: '갤러리에서 확인해보세요.',
-                        icon: '${babyIcon}'
-                    };
-                    event.waitUntil(self.registration.showNotification(title, options));
-                });
-            `;
-            const swBlob = new Blob([swContent], { type: 'application/javascript' });
-            const swUrl = URL.createObjectURL(swBlob);
-
+            // 서비스 워커는 실제 푸시 알림을 수신하는 역할을 합니다.
+            // 현재 테스트에서는 직접 알림을 생성하지만, 실제 서버 푸시를 위해서는 이 코드가 필요합니다.
             if ('serviceWorker' in navigator) {
+                const swContent = `self.addEventListener('push', event => {
+                    const data = event.data.json();
+                    self.registration.showNotification(data.title, {
+                        body: data.body,
+                        icon: data.icon
+                    });
+                });`;
+                const swBlob = new Blob([swContent], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(swBlob);
                 navigator.serviceWorker.register(swUrl)
                     .then(reg => console.log('Service worker registered.', reg))
                     .catch(err => console.log('Service worker not registered.', err));
@@ -471,13 +468,13 @@
         }
 
         /**
-         * 푸시 알림 테스트 기능 (개선된 로직)
+         * 푸시 알림 테스트 기능 (안정성 개선)
          */
         async function handlePushTest() {
             uploadMessage.textContent = '';
             uploadMessage.className = 'text-sm mt-2';
 
-            if (!('Notification' in window) || !navigator.serviceWorker) {
+            if (!('Notification' in window)) {
                 uploadMessage.textContent = '이 브라우저는 알림을 지원하지 않습니다.';
                 uploadMessage.classList.add('text-red-500');
                 return;
@@ -485,21 +482,18 @@
 
             try {
                 // 1. 사용자에게 알림 권한을 요청합니다.
-                // 이미 허용된 상태라면, 프롬프트 없이 'granted'를 반환합니다.
                 const permission = await Notification.requestPermission();
 
                 // 2. 권한 상태에 따라 분기합니다.
                 if (permission === 'granted') {
-                    // 3. 권한이 있으면 서비스 워커를 통해 알림을 표시합니다.
-                    const reg = await navigator.serviceWorker.ready;
-                    const title = '아기 갤러리 알림 �';
+                    // 3. 권한이 있으면 브라우저에서 직접 알림을 생성하여 즉시 테스트합니다.
+                    const title = '아기 갤러리 알림 🍼';
                     const options = {
                         body: '테스트 알림이 성공적으로 도착했습니다!',
                         icon: babyIcon,
-                        badge: babyIcon, // Android 상태바에 표시될 작은 아이콘
-                        tag: 'gallery-notification' // 알림을 식별하는 태그
+                        tag: 'gallery-notification-test' // 알림 중복 방지 태그
                     };
-                    await reg.showNotification(title, options);
+                    new Notification(title, options);
                     
                     uploadMessage.textContent = '테스트 알림을 보냈습니다! (OS 설정을 확인하세요)';
                     uploadMessage.classList.add('text-green-500');
@@ -591,4 +585,3 @@
     </script>
 </body>
 </html>
-�
