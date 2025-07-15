@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- PWA 테마 색상 -->
     <meta name="theme-color" content="#3498db"/>
-    <title>아기 갤러리</title>
+    <title>아기 갤러리2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- PWA 매니페스트 링크 -->
@@ -104,7 +104,7 @@
     <div id="app" class="container mx-auto p-4 md:p-6 max-w-6xl">
         
         <header class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">아기 갤러리 🍼</h1>
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">아기 갤러리2 🍼</h1>
             <p class="text-gray-500 mt-2">나만의 아기 이미지 모음</p>
         </header>
 
@@ -186,25 +186,18 @@
     <script type="module">
         // Firebase SDK 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 
         // --- Firebase 설정 ---
-        // 제공해주신 개인 Firebase 프로젝트 설정 정보입니다.
-        const firebaseConfig = {
-            apiKey: "AIzaSyCe36cYwqNz1yJnjJ0zA1W4vGY7IIaWDOU",
-            authDomain: "baby-sion.firebaseapp.com",
-            projectId: "baby-sion",
-            storageBucket: "baby-sion.firebasestorage.app",
-            messagingSenderId: "1067320748533",
-            appId: "1:1067320748533:web:db3b5bf48df4b0607498bc",
-            measurementId: "G-7S6ZQNKVCJ"
-        };
+        // 이 Canvas 환경에서 제공하는 임시 Firebase 설정을 사용합니다.
+        const firebaseConfig = typeof __firebase_config !== 'undefined' 
+            ? JSON.parse(__firebase_config) 
+            : { apiKey: "YOUR_API_KEY", authDomain: "YOUR_AUTH_DOMAIN", projectId: "YOUR_PROJECT_ID" }; // 예비용
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-gallery-app';
         
         // Firebase 앱 초기화
         const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
@@ -360,8 +353,7 @@
                 }
                 
                 uploadButton.textContent = '업로드 중...';
-                // 개인 프로젝트에 맞게 데이터베이스 경로를 수정합니다.
-                const collectionPath = `galleryImages`;
+                const collectionPath = `artifacts/${appId}/public/data/galleryImages`;
                 
                 await addDoc(collection(db, collectionPath), {
                     userId: userId,
@@ -479,33 +471,7 @@
         }
 
         /**
-         * 테스트 알림을 표시하는 함수
-         */
-        async function showTestNotification() {
-            try {
-                const reg = await navigator.serviceWorker.ready;
-                const title = '아기 갤러리 알림 �';
-                const options = {
-                    body: '테스트 알림이 성공적으로 도착했습니다!',
-                    icon: babyIcon,
-                    badge: babyIcon // Android 상태바에 표시될 작은 아이콘
-                };
-                reg.showNotification(title, options);
-                
-                uploadMessage.textContent = '테스트 알림을 보냈습니다! (OS 설정을 확인하세요)';
-                uploadMessage.classList.add('text-green-500');
-                setTimeout(() => uploadMessage.textContent = '', 5000);
-
-            } catch (err) {
-                console.error('showTestNotification error:', err);
-                uploadMessage.textContent = '알림 표시에 실패했습니다. 서비스 워커를 확인해주세요.';
-                uploadMessage.classList.add('text-red-500');
-                setTimeout(() => uploadMessage.textContent = '', 5000);
-            }
-        }
-
-        /**
-         * 푸시 알림 테스트 기능
+         * 푸시 알림 테스트 기능 (개선된 로직)
          */
         async function handlePushTest() {
             uploadMessage.textContent = '';
@@ -517,21 +483,36 @@
                 return;
             }
 
-            let permission = Notification.permission;
+            try {
+                // 1. 사용자에게 알림 권한을 요청합니다.
+                // 이미 허용된 상태라면, 프롬프트 없이 'granted'를 반환합니다.
+                const permission = await Notification.requestPermission();
 
-            if (permission === 'granted') {
-                showTestNotification();
-            } else if (permission === 'denied') {
-                notificationGuideModal.classList.remove('hidden');
-            } else { // 'default'
-                permission = await Notification.requestPermission();
+                // 2. 권한 상태에 따라 분기합니다.
                 if (permission === 'granted') {
-                    showTestNotification();
+                    // 3. 권한이 있으면 서비스 워커를 통해 알림을 표시합니다.
+                    const reg = await navigator.serviceWorker.ready;
+                    const title = '아기 갤러리 알림 �';
+                    const options = {
+                        body: '테스트 알림이 성공적으로 도착했습니다!',
+                        icon: babyIcon,
+                        badge: babyIcon, // Android 상태바에 표시될 작은 아이콘
+                        tag: 'gallery-notification' // 알림을 식별하는 태그
+                    };
+                    await reg.showNotification(title, options);
+                    
+                    uploadMessage.textContent = '테스트 알림을 보냈습니다! (OS 설정을 확인하세요)';
+                    uploadMessage.classList.add('text-green-500');
                 } else {
-                    uploadMessage.textContent = '알림 권한이 허용되지 않았습니다.';
-                    uploadMessage.classList.add('text-yellow-500');
-                    setTimeout(() => uploadMessage.textContent = '', 5000);
+                    // 4. 권한이 거부된 경우, 안내 모달을 표시합니다.
+                    notificationGuideModal.classList.remove('hidden');
                 }
+            } catch (err) {
+                console.error('Push test failed:', err);
+                uploadMessage.textContent = '알림 기능에 오류가 발생했습니다.';
+                uploadMessage.classList.add('text-red-500');
+            } finally {
+                setTimeout(() => uploadMessage.textContent = '', 5000);
             }
         }
 
@@ -540,16 +521,15 @@
          */
         async function initialize() {
             try {
-                // 중요: 이 앱은 익명 인증을 사용합니다.
-                // 회원님의 Firebase 프로젝트에서 'Authentication' -> 'Sign-in method'로 이동하여
-                // '익명' 로그인 제공업체를 반드시 '사용 설정'해야 합니다.
-                // 그렇지 않으면 'auth/configuration-not-found' 또는 'auth/admin-restricted-operation' 오류가 발생합니다.
-                await signInAnonymously(auth);
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
                 
                 userId = auth.currentUser.uid;
 
-                // 개인 프로젝트에 맞게 데이터베이스 경로를 수정합니다.
-                const collectionPath = `galleryImages`;
+                const collectionPath = `artifacts/${appId}/public/data/galleryImages`;
                 const q = query(collection(db, collectionPath));
 
                 onSnapshot(q, (querySnapshot) => {
@@ -568,7 +548,7 @@
 
             } catch (error) {
                 console.error("Authentication or Initialization failed: ", error);
-                loadingIndicator.innerHTML = `<p class="text-red-500">인증에 실패했습니다. Firebase 콘솔에서 '익명 인증'이 활성화되었는지 확인해주세요.</p>`;
+                loadingIndicator.innerHTML = `<p class="text-red-500">앱 초기화에 실패했습니다.</p>`;
                 renderGallery([]);
             }
         }
@@ -585,8 +565,7 @@
 
         confirmDelete.addEventListener('click', async () => {
             if (docIdToDelete) {
-                // 개인 프로젝트에 맞게 데이터베이스 경로를 수정합니다.
-                const collectionPath = `galleryImages`;
+                const collectionPath = `artifacts/${appId}/public/data/galleryImages`;
                 await deleteDoc(doc(db, collectionPath, docIdToDelete));
                 closeAllModals();
             }
