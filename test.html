@@ -186,17 +186,22 @@
     <script type="module">
         // Firebase SDK 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         // Firebase Cloud Messaging SDK 추가
         import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-messaging.js";
 
         // --- Firebase 설정 ---
-        // 이 Canvas 환경에서 제공하는 임시 Firebase 설정을 사용합니다.
-        const firebaseConfig = typeof __firebase_config !== 'undefined' 
-            ? JSON.parse(__firebase_config) 
-            : { apiKey: "YOUR_API_KEY", authDomain: "YOUR_AUTH_DOMAIN", projectId: "YOUR_PROJECT_ID" }; // 예비용
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-gallery-app';
+        // 제공해주신 개인 Firebase 프로젝트 설정 정보입니다.
+        const firebaseConfig = {
+            apiKey: "AIzaSyCe36cYwqNz1yJnjJ0zA1W4vGY7IIaWDOU",
+            authDomain: "baby-sion.firebaseapp.com",
+            projectId: "baby-sion",
+            storageBucket: "baby-sion.firebasestorage.app",
+            messagingSenderId: "1067320748533",
+            appId: "1:1067320748533:web:db3b5bf48df4b0607498bc",
+            measurementId: "G-7S6ZQNKVCJ"
+        };
         
         // Firebase 앱 초기화
         const app = initializeApp(firebaseConfig);
@@ -356,7 +361,7 @@
                 }
                 
                 uploadButton.textContent = '업로드 중...';
-                const collectionPath = `artifacts/${appId}/public/data/galleryImages`;
+                const collectionPath = `galleryImages`;
                 
                 await addDoc(collection(db, collectionPath), {
                     userId: userId,
@@ -523,15 +528,15 @@
          */
         async function initialize() {
             try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
+                // 중요: 이 앱은 익명 인증을 사용합니다.
+                // 회원님의 Firebase 프로젝트에서 'Authentication' -> 'Sign-in method'로 이동하여
+                // '익명' 로그인 제공업체를 반드시 '사용 설정'해야 합니다.
+                // 그렇지 않으면 'auth/configuration-not-found' 또는 'auth/admin-restricted-operation' 오류가 발생합니다.
+                await signInAnonymously(auth);
                 
                 userId = auth.currentUser.uid;
 
-                const collectionPath = `artifacts/${appId}/public/data/galleryImages`;
+                const collectionPath = `galleryImages`;
                 const q = query(collection(db, collectionPath));
 
                 onSnapshot(q, (querySnapshot) => {
@@ -550,7 +555,7 @@
 
             } catch (error) {
                 console.error("Authentication or Initialization failed: ", error);
-                loadingIndicator.innerHTML = `<p class="text-red-500">앱 초기화에 실패했습니다.</p>`;
+                loadingIndicator.innerHTML = `<p class="text-red-500">인증에 실패했습니다. Firebase 콘솔에서 '익명 인증'이 활성화되었는지 확인해주세요.</p>`;
                 renderGallery([]);
             }
         }
@@ -567,7 +572,7 @@
 
         confirmDelete.addEventListener('click', async () => {
             if (docIdToDelete) {
-                const collectionPath = `artifacts/${appId}/public/data/galleryImages`;
+                const collectionPath = `galleryImages`;
                 await deleteDoc(doc(db, collectionPath, docIdToDelete));
                 closeAllModals();
             }
