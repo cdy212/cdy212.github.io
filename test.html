@@ -437,27 +437,8 @@
 
             // 서비스 워커 등록. 실제 배포 시에는 이 파일이 프로젝트 루트에 있어야 합니다.
             if ('serviceWorker' in navigator) {
-                // 이 환경에서는 동적으로 서비스 워커를 생성합니다.
-                const swContent = `
-                    importScripts('https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js');
-                    importScripts('https://www.gstatic.com/firebasejs/11.6.1/firebase-messaging-compat.js');
-                    
-                    // 서비스 워커에서 Firebase 앱 초기화
-                    // 이 설정 정보는 실제 배포하는 프로젝트의 정보와 일치해야 합니다.
-                    firebase.initializeApp({
-                        apiKey: "${firebaseConfig.apiKey}",
-                        authDomain: "${firebaseConfig.authDomain}",
-                        projectId: "${firebaseConfig.projectId}",
-                        storageBucket: "${firebaseConfig.storageBucket}",
-                        messagingSenderId: "${firebaseConfig.messagingSenderId}",
-                        appId: "${firebaseConfig.appId}",
-                    });
-
-                    const messaging = firebase.messaging();
-                `;
-                const swBlob = new Blob([swContent], { type: 'application/javascript' });
-                const swUrl = URL.createObjectURL(swBlob);
-                navigator.serviceWorker.register(swUrl)
+                // '/firebase-messaging-sw.js' 파일을 등록하도록 수정
+                navigator.serviceWorker.register('/firebase-messaging-sw.js')
                     .then(reg => console.log('Service worker registered.', reg))
                     .catch(err => console.log('Service worker not registered.', err));
             }
