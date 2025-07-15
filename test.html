@@ -481,7 +481,7 @@
                     // FCM 토큰 가져오기
                     // 중요: "YOUR_VAPID_KEY" 부분은 반드시 본인의 Firebase 프로젝트의 VAPID 키로 교체해야 합니다.
                     // 위치: Firebase 콘솔 > 프로젝트 설정 > 클라우드 메시징 > 웹 푸시 인증서 > 키 쌍
-                    const vapidKey = "YOUR_VAPID_KEY"; // <--- 이 부분을 실제 키로 교체하세요!
+                    const vapidKey = "BHaTug7CdAOocPLyRzMjszm25Lxc3zGoiQzMUd9pmqCpF8nxy-sN3R_18VUU7YBGquWJ0xfhqIyfcq6H9RAk3W0"; // <--- 이 부분을 실제 키로 교체하세요!
                     const currentToken = await getToken(messaging, { vapidKey: vapidKey });
 
                     if (currentToken) {
