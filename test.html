@@ -10,8 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- PWA 매니페스트 링크 -->
     <link rel="manifest" id="manifest">
-    <!-- iOS 홈 화면 아이콘 -->
-    <link rel="apple-touch-icon" href="https://placehold.co/192x192/A9C9FF/FFFFFF?text=🍼">
+    <!-- iOS 홈 화면 아이콘: 이 부분을 다른 이미지 주소로 바꾸면 아이콘이 변경됩니다. -->
+    <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0NSIgZmlsbD0iI0ZGRERDMSIvPjxjaXJjbGUgY3g9IjM1IiBjeT0iNDUiIHI9IjUiIGZpbGw9IiMwMDAiLz48Y2lyY2xlIGN4PSI2NSIgY3k9IjQ1IiByPSI1IiBmaWxsPSIjMDAwIi8+PHBhdGggZD0iTTQwIDY1IFE1MCA3NSA2MCA2NSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiLz48L3N2Zz4=">
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -117,6 +117,10 @@
                 <button id="uploadButton" class="w-full md:w-auto bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg transition shadow-md hover:shadow-lg">
                     업로드
                 </button>
+                <!-- 푸시 알림 테스트 버튼 -->
+                <button id="pushTestButton" class="w-full md:w-auto bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg transition shadow-md hover:shadow-lg">
+                    알림 테스트
+                </button>
             </div>
             <p id="uploadMessage" class="text-sm mt-2"></p>
         </div>
@@ -157,6 +161,17 @@
             </div>
         </div>
     </div>
+    
+    <!-- 알림 권한 안내 모달 -->
+    <div id="notificationGuideModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-xl p-8 m-4 max-w-sm w-full">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">알림 권한이 필요해요</h3>
+            <p class="text-gray-600 mb-6">알림이 차단되어 있습니다. 새로운 소식을 받으려면 브라우저 설정에서 이 사이트의 알림을 '허용'으로 변경해주세요.</p>
+            <div class="text-center">
+                <button id="closeGuideModal" class="px-6 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition">확인</button>
+            </div>
+        </div>
+    </div>
 
     <!-- 홈 화면에 추가 버튼 -->
     <div id="installContainer">
@@ -171,22 +186,13 @@
     <script type="module">
         // Firebase SDK 가져오기
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 
         // --- Firebase 설정 ---
-        // 이 Canvas 환경에서 제공하는 임시 Firebase 설정을 사용합니다.
-        const firebaseConfig = typeof __firebase_config !== 'undefined' 
-            ? JSON.parse(__firebase_config) 
-            : { apiKey: "YOUR_API_KEY", authDomain: "YOUR_AUTH_DOMAIN", projectId: "YOUR_PROJECT_ID" }; // 예비용
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-gallery-app';
-        
-        /*
-        // 참고: 이전에 제공해주신 개인 Firebase 설정입니다.
-        // 이 설정을 사용하려면 Firebase 콘솔에서 'Authentication' -> 'Sign-in method'의
-        // '익명' 로그인 제공업체를 반드시 '사용 설정'해야 합니다.
-        */
-        const userFirebaseConfig = {
+        // 제공해주신 개인 Firebase 프로젝트 설정 정보입니다.
+        const firebaseConfig = {
             apiKey: "AIzaSyCe36cYwqNz1yJnjJ0zA1W4vGY7IIaWDOU",
             authDomain: "baby-sion.firebaseapp.com",
             projectId: "baby-sion",
@@ -196,10 +202,9 @@
             measurementId: "G-7S6ZQNKVCJ"
         };
         
-        
         // Firebase 앱 초기화
-        // const app = initializeApp(firebaseConfig);
-        const app = initializeApp(userFirebaseConfig);
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
@@ -210,6 +215,7 @@
         const imageTitle = document.getElementById('imageTitle');
         const uploadMessage = document.getElementById('uploadMessage');
         const loadingIndicator = document.getElementById('loadingIndicator');
+        const pushTestButton = document.getElementById('pushTestButton');
         // 모달 요소
         const imageModal = document.getElementById('imageModal');
         const modalImage = document.getElementById('modalImage');
@@ -219,6 +225,9 @@
         const deleteConfirmModal = document.getElementById('deleteConfirmModal');
         const cancelDelete = document.getElementById('cancelDelete');
         const confirmDelete = document.getElementById('confirmDelete');
+        // 알림 안내 모달 요소
+        const notificationGuideModal = document.getElementById('notificationGuideModal');
+        const closeGuideModal = document.getElementById('closeGuideModal');
         // 설치 버튼 요소
         const installContainer = document.getElementById('installContainer');
         const installButton = document.getElementById('installButton');
@@ -226,6 +235,8 @@
         let userId = null;
         let docIdToDelete = null;
         let deferredPrompt;
+        const babyIcon = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0NSIgZmlsbD0iI0ZGRERDMSIvPjxjaXJjbGUgY3g9IjM1IiBjeT0iNDUiIHI9IjUiIGZpbGw9IiMwMDAiLz48Y2lyY2xlIGN4PSI2NSIgY3k9IjQ1IiByPSI1IiBmaWxsPSIjMDAwIi8+PHBhdGggZD0iTTQwIDY1IFE1MCA3NSA2MCA2NSIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiLz48L3N2Zz4=';
+
 
         /**
          * 갤러리를 렌더링하는 함수
@@ -349,7 +360,8 @@
                 }
                 
                 uploadButton.textContent = '업로드 중...';
-                const collectionPath = `artifacts/${appId}/public/data/galleryImages`;
+                // 개인 프로젝트에 맞게 데이터베이스 경로를 수정합니다.
+                const collectionPath = `galleryImages`;
                 
                 await addDoc(collection(db, collectionPath), {
                     userId: userId,
@@ -398,6 +410,7 @@
         function closeAllModals() {
             imageModal.classList.add('hidden');
             deleteConfirmModal.classList.add('hidden');
+            notificationGuideModal.classList.add('hidden');
             docIdToDelete = null;
         }
 
@@ -405,7 +418,6 @@
          * PWA 관련 기능 설정
          */
         function setupPWA() {
-            // 1. Manifest 파일 내용 생성 및 연결
             const manifestContent = {
                 "name": "아기 갤러리",
                 "short_name": "아기 갤러리",
@@ -414,8 +426,8 @@
                 "background_color": "#f0f4f8",
                 "theme_color": "#3498db",
                 "icons": [
-                    { "src": "https://placehold.co/192x192/A9C9FF/FFFFFF?text=🍼", "type": "image/png", "sizes": "192x192" },
-                    { "src": "https://placehold.co/512x512/A9C9FF/FFFFFF?text=🍼", "type": "image/png", "sizes": "512x512" }
+                    { "src": babyIcon, "type": "image/svg+xml", "sizes": "192x192" },
+                    { "src": babyIcon, "type": "image/svg+xml", "sizes": "512x512" }
                 ]
             };
             const manifestString = JSON.stringify(manifestContent);
@@ -423,7 +435,26 @@
             const manifestUrl = URL.createObjectURL(manifestBlob);
             document.querySelector('#manifest').setAttribute('href', manifestUrl);
 
-            // 2. 설치 프롬프트 이벤트 처리
+            const swContent = `
+                self.addEventListener('install', (event) => { console.log('Service Worker installing.'); });
+                self.addEventListener('push', (event) => {
+                    const title = '새로운 소식이 도착했어요!';
+                    const options = {
+                        body: '갤러리에서 확인해보세요.',
+                        icon: '${babyIcon}'
+                    };
+                    event.waitUntil(self.registration.showNotification(title, options));
+                });
+            `;
+            const swBlob = new Blob([swContent], { type: 'application/javascript' });
+            const swUrl = URL.createObjectURL(swBlob);
+
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register(swUrl)
+                    .then(reg => console.log('Service worker registered.', reg))
+                    .catch(err => console.log('Service worker not registered.', err));
+            }
+
             window.addEventListener('beforeinstallprompt', (e) => {
                 e.preventDefault();
                 deferredPrompt = e;
@@ -447,21 +478,78 @@
             });
         }
 
+        /**
+         * 테스트 알림을 표시하는 함수
+         */
+        async function showTestNotification() {
+            try {
+                const reg = await navigator.serviceWorker.ready;
+                const title = '아기 갤러리 알림 �';
+                const options = {
+                    body: '테스트 알림이 성공적으로 도착했습니다!',
+                    icon: babyIcon,
+                    badge: babyIcon // Android 상태바에 표시될 작은 아이콘
+                };
+                reg.showNotification(title, options);
+                
+                uploadMessage.textContent = '테스트 알림을 보냈습니다! (OS 설정을 확인하세요)';
+                uploadMessage.classList.add('text-green-500');
+                setTimeout(() => uploadMessage.textContent = '', 5000);
+
+            } catch (err) {
+                console.error('showTestNotification error:', err);
+                uploadMessage.textContent = '알림 표시에 실패했습니다. 서비스 워커를 확인해주세요.';
+                uploadMessage.classList.add('text-red-500');
+                setTimeout(() => uploadMessage.textContent = '', 5000);
+            }
+        }
+
+        /**
+         * 푸시 알림 테스트 기능
+         */
+        async function handlePushTest() {
+            uploadMessage.textContent = '';
+            uploadMessage.className = 'text-sm mt-2';
+
+            if (!('Notification' in window) || !navigator.serviceWorker) {
+                uploadMessage.textContent = '이 브라우저는 알림을 지원하지 않습니다.';
+                uploadMessage.classList.add('text-red-500');
+                return;
+            }
+
+            let permission = Notification.permission;
+
+            if (permission === 'granted') {
+                showTestNotification();
+            } else if (permission === 'denied') {
+                notificationGuideModal.classList.remove('hidden');
+            } else { // 'default'
+                permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    showTestNotification();
+                } else {
+                    uploadMessage.textContent = '알림 권한이 허용되지 않았습니다.';
+                    uploadMessage.classList.add('text-yellow-500');
+                    setTimeout(() => uploadMessage.textContent = '', 5000);
+                }
+            }
+        }
 
         /**
          * 앱 초기화 및 인증 처리
          */
         async function initialize() {
             try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
+                // 중요: 이 앱은 익명 인증을 사용합니다.
+                // 회원님의 Firebase 프로젝트에서 'Authentication' -> 'Sign-in method'로 이동하여
+                // '익명' 로그인 제공업체를 반드시 '사용 설정'해야 합니다.
+                // 그렇지 않으면 'auth/configuration-not-found' 또는 'auth/admin-restricted-operation' 오류가 발생합니다.
+                await signInAnonymously(auth);
                 
                 userId = auth.currentUser.uid;
 
-                const collectionPath = `artifacts/${appId}/public/data/galleryImages`;
+                // 개인 프로젝트에 맞게 데이터베이스 경로를 수정합니다.
+                const collectionPath = `galleryImages`;
                 const q = query(collection(db, collectionPath));
 
                 onSnapshot(q, (querySnapshot) => {
@@ -480,22 +568,25 @@
 
             } catch (error) {
                 console.error("Authentication or Initialization failed: ", error);
-                loadingIndicator.innerHTML = `<p class="text-red-500">앱 초기화에 실패했습니다.</p>`;
+                loadingIndicator.innerHTML = `<p class="text-red-500">인증에 실패했습니다. Firebase 콘솔에서 '익명 인증'이 활성화되었는지 확인해주세요.</p>`;
                 renderGallery([]);
             }
         }
 
         // --- 이벤트 리스너 ---
         uploadButton.addEventListener('click', handleUpload);
+        pushTestButton.addEventListener('click', handlePushTest);
         closeModal.addEventListener('click', closeAllModals);
         imageModal.addEventListener('click', (e) => {
             if (e.target === imageModal) closeAllModals();
         });
         cancelDelete.addEventListener('click', closeAllModals);
+        closeGuideModal.addEventListener('click', closeAllModals); // 가이드 모달 닫기 버튼
 
         confirmDelete.addEventListener('click', async () => {
             if (docIdToDelete) {
-                const collectionPath = `artifacts/${appId}/public/data/galleryImages`;
+                // 개인 프로젝트에 맞게 데이터베이스 경로를 수정합니다.
+                const collectionPath = `galleryImages`;
                 await deleteDoc(doc(db, collectionPath, docIdToDelete));
                 closeAllModals();
             }
@@ -521,3 +612,4 @@
     </script>
 </body>
 </html>
+�
