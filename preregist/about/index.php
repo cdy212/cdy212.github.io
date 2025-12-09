@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if IE 7]><html xmlns="http://www.w3.org/1999/xhtml" lang="eng" xml:lang="eng" class="ie7"><![endif]-->
+<!--[if IE 8]><html xmlns="http://www.w3.org/1999/xhtml" lang="eng" xml:lang="eng" class="ie8"><![endif]-->
+<!--[if IE 9]><html xmlns="http://www.w3.org/1999/xhtml" lang="eng" xml:lang="eng" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html xmlns="http://www.w3.org/1999/xhtml" lang="eng" xml:lang="eng"><!--<![endif]-->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>2025 대한내분비학회 추계학술대회</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="format-detection" content="telephone=no">
+<link type="text/css" rel="stylesheet" href="/workshop/2025F/asset/workshop.css">
+<link type="text/css" rel="stylesheet" href="/admin/button_package/button.css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
+<script type="text/javascript" src="/workshop/2025F/asset/jquery.bxslider.min.js"></script>
+<script type="text/javascript" src="/workshop/2025F/asset/user.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+<body>
+<div class="wrapper">
+
+	<div id="headerWrap">
+
+		<dl id="skipNavi">
+			<dt>Skip Navigation</dt>
+			<dd><a href="#container">Skip to contents</a></dd>
+		</dl>
+
+		<div class="header">
+
+			<h1><a href="/workshop/2025F/index.php"><img src="/workshop/2025F/asset/image/header_logo.png" alt="대한내분비학회"></a></h1>
+
+			<ul id="gnb">
+									<li>
+						<a href="/workshop/2025F/about/index.php" >초대의 글</a>
+					</li>
+										<li>
+						<a href="/workshop/2025F/program/index.php?sn=1" >프로그램</a>
+					</li>
+										<li>
+						<a href="/workshop/2025F/abstract/index.php" >초록접수</a>
+					</li>
+										<li>
+						<a href="/workshop/2025F/registration/index.php" >사전등록</a>
+					</li>
+										<li>
+						<a href="/workshop/2025F/venue/index.php" >행사장</a>
+					</li>
+										<li>
+						<a href="/workshop/2025F/hotel/index.php" >호텔</a>
+					</li>
+										<li>
+						<a href="/workshop/bbs/?code=notice_2025F" >공지사항</a>
+					</li>
+								</ul>
+
+			<ul class="headerUtil">
+				<li><a href="/workshop/2025F/index.php"><strong>HOME</strong></a></li>
+									<li><a href="/member/login.php?url=/workshop/2025F/about/index.php"><strong>LOGIN</strong></a></li>
+								<li><a href="/" target="_blank"><strong>대한내분비학회 홈페이지</strong></a></li>
+			</ul>
+		</div>
+		<!-- //header -->
+	</div>
+	<!-- //headerWrap -->
+	<hr />	
+
+	
+	<!-- 메인일 경우 class="main" 추가 -->
+	<div id="container" >
+		
+		        
+		        <div class="subVisual">
+            <p>2025 대한내분비학회 추계학술대회 및 학연산 심포지엄 | 2025.10.30(목) ~ 11.1(토) | 롯데호텔 부산</p>
+        </div>
+				<h2 class="pageTit"><span>초대의 글</span></h2>
+
+				<div class="contents">
+		
+<div class="message">
+	<p>대한내분비학회 회원 여러분,</p>
+	<p>안녕하십니까? 여러분의 행복과 평안함을 기원합니다.</p>
+	<p>높고 푸른 하늘과 시원한 바람이 함께하는 가을,<br>
+	<strong>2025년 10월 30일(목)부터 11월 1일(토)까지,</strong><br>아름다운 해변 도시 부산의 롯데호텔 부산에서 <strong style="color:#283477; font-size: 18px;">대한내분비학회 추계학술대회 및 학연산 심포지엄</strong>이 개최됩니다. </p>
+	<p>이번 학술대회는 <em><strong>"Beyond the Barriers"</strong></em>라는 주제로,<br>내분비대사의 다양한 분야인 당뇨병, 비만, 지질, 갑상선, 골대사, 뇌하수체, 부신 및 생식 등 전 영역에 걸친 최신 지견을 공유하고,<br>깊이 있는 학문적 교류의 장이 될 수 있도록 풍성한 프로그램을 준비하였습니다.</p>
+	<p>Plenary lectures와 Presidential lecture를 비롯하여<br>
+	내분비학 전 분야를 망라한 Scientific sessions, 내분비학의 내일을 설계하는 자리가 될 Endocrine summit 2025 등 다채롭고 의미 있는 세션들이 마련되어 있으며, 각 분야의 국내외 저명한 연자들을 모시고 회원 여러분과 함께 고민하고 토론하는 소중한 자리가 될 것입니다. </p>
+	<p>이번 학술대회가 회원 여러분께 학문적 영감과 네트워킹의 기회를 제공하고, 더 나아가 따뜻한 교류와 화합의 시간이 되기를 진심으로 바랍니다.<br>바쁘신 일정 중에도 부디 참석하시어 자리를 빛내주시기를 부탁드립니다.</p>
+	<p>여러분의 건강과 건승을 기원드리며, 이번 학술대회에 많은 관심과 성원을 부탁드립니다.</p>
+	<p>감사합니다.</p>
+</div>
+<div class="sign">
+    <center><img src="../asset/image/message_2025_v3_02.png" alt=""></center>
+</div>
+				</div>
+		<!-- //contents -->
+		
+	</div>
+	<!-- container -->
+	<hr />	
+
+		
+	<div class="sponsor new">
+	<dl class="sponBanr">
+		<dt><img src="/image/sponsor/sponTit_platinum_new.png" alt="PLATINUM" /></dt>
+		<dd>
+			<ul>
+				<li><a href="http://www.donga-st.com/html/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Platinum_01.png" alt="donga"></a></li>
+				<li><a href="https://www.ckdpharm.com/home" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Platinum_02.png" alt="CKD"></a></li>
+				<li><a href="https://www.lgchem.com/main/index" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Platinum_03.png" alt="lgchem"></a></li>
+				<li><a href="https://www.novonordisk.co.kr/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Platinum_04.png" alt="novo"></a></li>
+				<li><a href="https://www.boehringer-ingelheim.com/kr/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Platinum_05.png" alt="베링거인겔하임"></a></li>
+				<li><a href="https://www.daewoong.co.kr/en/main/index" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Platinum_06.png" alt="deawoong"></a></li>
+			</ul>
+		</dd>
+
+		<dt><img src="/image/sponsor/sponTit_gold_new.png" alt="GOLD" /></dt>
+		<dd>
+			<ul>
+				<li><a href="https://www.handok.co.kr/en/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Gold_01.png" alt="handok"></a></li>
+				<li><a href="https://www.sanofi.co.kr/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Gold_02.png" alt="sanofi"></a></li>
+				<li><a href="https://www.hanmi.co.kr" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Gold_03.png" alt="hanmi"></a></li>
+				<li><a href="https://www.jw-pharma.co.kr/pharma/en/main.jsp" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Gold_04.png" alt="JW"></a></li>
+				<li><a href="https://www.celltrionph.com/en-us/home/index" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Gold_05.png" alt="celltrion"></a></li>
+				<li><a href="http://eng.yuhan.co.kr/Main/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Gold_06.png" alt="yuhan"></a></li>
+				<li><a href="https://www.bayer.com/en/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Gold_07.png" alt="Bayer"></a></li>
+				<li><a href="https://www.astrazeneca.co.kr/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Gold_08.png" alt="astra"></a></li>
+			</ul>
+		</dd>
+	</dl>
+
+	<dl class="sponBanr">
+		<dt><img src="/image/sponsor/sponTit_sliver_new.png" alt="SILVER" /></dt>
+		<dd>
+			<ul>
+				<li><a href="https://wwwext.amgen.com/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Silver_01.png" alt="amgen"></a></li>
+				<li><a href="https://boryung.co.kr" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Silver_02.png" alt="boryung"></a></li>
+				<li><a href="https://www.bukwang.co.kr/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Silver_03.png" alt="bukwang"></a></li>
+				<li><a href="https://www.lilly.co.kr" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Gold_08.png" alt="lilly"></a></li>
+				<li><a href="https://www.daiichisankyo.co.kr/ " target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Silver_04.png" alt="daichi"></a></li>
+				<li><a href="http://www.hyundaipharm.co.kr/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Silver_05.png" alt="hyundai"></a></li>
+				<li><a href="http://www.inno-n.com/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Silver_06.png" alt="innoN"></a></li>
+				<li><a href="https://www.gsk.com/en-gb/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Silver_07.png" alt="GSK"></a></li>
+				<li><a href="https://www.yypharm.co.kr/main" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Silver_08.png" alt="yooyoung"></a></li>
+			</ul>
+		</dd>
+
+		<dt><img src="/image/sponsor/sponTit_bronze_new.png" alt="BRONZE" /></dt>
+		<dd>
+			<ul>
+				<li><a href="http://www.organon.com/korea" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Bronze_01.png" alt="organon"></a></li>
+				<li><a href="https://www.daewonpharm.com/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Bronze_02.png" alt="daewon"></a></li>
+				<li><a href="https://www.jeilpharm.co.kr/jeilpharm/?direct=Y" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Bronze_03.png" alt="jeil"></a></li>
+				<li><a href="http://www.dalimpharm.co.kr/en_index.html" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Bronze_04.png" alt="dalim"></a></li>
+				<li><a href="https://ajupharm.co.kr/?redirect=no" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Bronze_05.png" alt="aju"></a></li>
+				<li><a href="http://mmpharm.co.kr/en/main/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Bronze_06.png" alt="myungmoon"></a></li>
+				<li><a href="http://www.hanlim.com" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Bronze_07.png" alt="hanlim"></a></li>
+				<li><a href="http://www.daewoongchemical.com/" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Bronze_08.png" alt="daewoongbio"></a></li>
+				<li><a href="https://www.dkpharm.co.kr/en" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Bronze_09.png" alt="동국제약"></a></li>
+				<li><a href="https://www.dong-wha.co.kr/english/dw_main.asp" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Bronze_10.png" alt="동화약품"></a></li>
+				<li><a href="https://www.gcbiopharma.com/eng/index.do" target="_blank"><img src="https://www.endocrinology.or.kr/workshop/2025F/asset/image/bnr/img_sponsor_Bronze_11.png" alt="녹십자"></a></li>
+			</ul>
+		</dd>
+	</dl>
+
+	<!-- <ul class="otherSite">
+		<li>
+				<a -href="https://knto.or.kr/eng/index" target="_blank"><img src="/image/sponsor/main_FEBS.png" alt="FEBS"></a>
+				<a href="https://knto.or.kr/eng/index" target="_blank"><img src="/image/sponsor/main_koto.png" alt="한국관광공사"></a>
+			</li>
+		<li><a href="https://english.seoul.go.kr/?SSid=101_01" target="_blank"><img src="/image/sponsor/main_smg.png" alt="서울시"></a></li>
+	</ul> -->
+</div>
+	<div id="footerWrap">
+		<div>
+			<div class="footer-box">
+				<ul class="footer-items">
+				   <li><strong>대한내분비학회</strong></li>
+					<li><address>(04146) 서울시 마포구 마포대로 109 롯데캐슬프레지던트 101동 2503호</address></li>
+					<li>E. endo@endocrinology.or.kr l T. 02-2038-3771 l F. 02-714-5103</li>
+					<li>사업자등록번호: 106-82-31113 l 대표자 성명: 홍은경</li>
+				</ul>
+				<ul class="footer-items">
+					<li><strong>2025 대한내분비학회 추계학술대회 및 학연산 심포지엄 준비사무국(인투온)</strong></li>
+					<li>(04315) 서울시 용산구 백범로 341, 금호리첸시아 A블럭 405호</li>
+					<li>E. endo@into-on.com l T. 02-2285-2592 l F. 02-2285-2530</li>
+				</ul>
+				<p class="footer-items full">Copyright &copy; The Korean Endocrine Society. All rights Reserved</p>
+			</div>
+			<div id="goTop"><a href="#headerWrap"><img src="/workshop/2025F/asset/image/goTop.png" alt="위로가기"></a></div>
+		</div>
+	</div>
+
+
+</div>	
+</body>
+</html>	
