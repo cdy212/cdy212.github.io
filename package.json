@@ -1,0 +1,24 @@
+{
+  "name": "cdy212.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdy212/cdy212.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/cdy212/cdy212.github.io/issues"
+  },
+  "homepage": "https://github.com/cdy212/cdy212.github.io#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
