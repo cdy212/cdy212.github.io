@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서버 구축 및 CI/CD 배포 자동화 명세서</title>
+    <!-- Mermaid.js for Diagrams -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ 
+            startOnLoad: true, 
+            theme: 'dark',
+            securityLevel: 'loose',
+            fontFamily: 'Pretendard, sans-serif'
+        });
+    </script>
+    <style>
+        /* * Design System: Glassmorphism & Neon
+         * Theme: Day/Night + 4 Seasons
+         */
+        :root {
+            /* Default Dark Theme Variables */
+            --bg-color: #0f172a;
+            --text-color: #e2e8f0;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --accent-color: #38bdf8; /* Sky Blue Neon */
+            --accent-glow: rgba(56, 189, 248, 0.5);
+            --card-bg: rgba(30, 41, 59, 0.7);
+            
+            /* Aurora Background Colors */
+            --orb-1: #4f46e5;
+            --orb-2: #818cf8;
+            --orb-3: #22d3ee;
+        }
+
+        /* Themes */
+        [data-theme="day"] {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            --accent-color: #0284c7;
+            --accent-glow: rgba(2, 132, 199, 0.3);
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --orb-1: #bae6fd; --orb-2: #e0f2fe; --orb-3: #7dd3fc;
+        }
+
+        [data-theme="spring"] {
+            --bg-color: #1a2e1a; --text-color: #f0fdf4;
+            --accent-color: #4ade80; --accent-glow: rgba(74, 222, 128, 0.5);
+            --orb-1: #166534; --orb-2: #22c55e; --orb-3: #86efac;
+        }
+        [data-theme="summer"] {
+            --bg-color: #0c4a6e; --text-color: #f0f9ff;
+            --accent-color: #0ea5e9; --accent-glow: rgba(14, 165, 233, 0.5);
+            --orb-1: #0369a1; --orb-2: #38bdf8; --orb-3: #bae6fd;
+        }
+        [data-theme="autumn"] {
+            --bg-color: #451a03; --text-color: #fff7ed;
+            --accent-color: #fb923c; --accent-glow: rgba(251, 146, 60, 0.5);
+            --orb-1: #9a3412; --orb-2: #ea580c; --orb-3: #fdba74;
+        }
+        [data-theme="winter"] {
+            --bg-color: #27272a; --text-color: #fafafa;
+            --accent-color: #a1a1aa; --accent-glow: rgba(255, 255, 255, 0.5);
+            --orb-1: #52525b; --orb-2: #d4d4d8; --orb-3: #ffffff;
+            /* Snow effect handled in CSS animation overlay if needed */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Aurora Background Animation */
+        .background-orbs {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            filter: blur(80px);
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+            opacity: 0.6;
+        }
+        .orb-1 { width: 50vw; height: 50vw; background: var(--orb-1); top: -10%; left: -10%; animation-delay: 0s; }
+        .orb-2 { width: 40vw; height: 40vw; background: var(--orb-2); top: 40%; right: -5%; animation-delay: -5s; }
+        .orb-3 { width: 30vw; height: 30vw; background: var(--orb-3); bottom: -10%; left: 20%; animation-delay: -10s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            perspective: 1000px; /* For 3D Tilt */
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--text-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 15px;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            background: var(--accent-glow);
+            border-radius: 20px;
+            border: 1px solid var(--accent-color);
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        /* Cards (Glassmorphism) */
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: var(--glass-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        /* 3D Tilt Hover Effect */
+        .card:hover {
+            transform: translateY(-5px) rotateX(2deg);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-color);
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--glass-border);
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin: 30px 0 15px 0;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        /* Diagram Container */
+        .diagram-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            overflow-x: auto;
+            border: 1px solid var(--glass-border);
+        }
+        
+        [data-theme="day"] .diagram-container {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        th {
+            background: rgba(0,0,0,0.2);
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        [data-theme="day"] th { background: rgba(0,0,0,0.05); }
+
+        tr:last-child td { border-bottom: none; }
+        
+        tr:hover td {
+            background: var(--glass-bg);
+            color: var(--accent-color);
+        }
+
+        /* Lists */
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        /* Troubleshooting Boxes */
+        .issue-box {
+            background: rgba(255, 50, 50, 0.1);
+            border-left: 4px solid #ff5555;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+        .issue-title {
+            font-weight: bold;
+            color: #ff8888;
+            margin-bottom: 5px;
+            display: block;
+        }
+        [data-theme="day"] .issue-title { color: #d32f2f; }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .main-fab {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--accent-color);
+            box-shadow: 0 4px 15px var(--accent-glow);
+            color: var(--text-color);
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .main-fab:hover {
+            transform: scale(1.1) rotate(45deg);
+            background: var(--accent-color);
+            color: #000;
+        }
+
+        .theme-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .theme-switcher:hover .theme-options {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .theme-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 0.8rem;
+            backdrop-filter: blur(10px);
+            transition: 0.2s;
+            text-align: right;
+        }
+
+        .theme-btn:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            font-weight: bold;
+        }
+        
+        /* Utility */
+        .highlight { color: var(--accent-color); font-weight: bold; }
+        code {
+            background: rgba(0,0,0,0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', monospace;
+            color: #fb923c;
+        }
+        [data-theme="day"] code { background: rgba(0,0,0,0.08); color: #d946ef; }
+
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switcher">
+        <button class="main-fab">⚙️</button>
+        <div class="theme-options">
+            <button class="theme-btn" onclick="setTheme('spring')">🌱 Spring</button>
+            <button class="theme-btn" onclick="setTheme('summer')">🌊 Summer</button>
+            <button class="theme-btn" onclick="setTheme('autumn')">🍂 Autumn</button>
+            <button class="theme-btn" onclick="setTheme('winter')">❄️ Winter</button>
+            <hr style="border:0; border-top:1px solid var(--glass-border); width:100%;">
+            <button class="theme-btn" onclick="setTheme('day')">☀️ Day</button>
+            <button class="theme-btn" onclick="setTheme('night')">🌙 Night</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        
+        <header>
+            <h1>서버 구축 및 CI/CD 배포 자동화 명세서</h1>
+            <div class="meta-info">
+                <span class="badge">NCP (Ubuntu)</span>
+                <span class="badge">Node.js 22 LTS</span>
+                <span class="badge">GitHub Actions</span>
+                <span>📅 2025.12.10</span>
+            </div>
+        </header>
+
+        <!-- Section 1 -->
+        <section class="card">
+            <h2>1. NCP 서버 구성 (Server Configuration)</h2>
+            
+            <h3>[A] 구성 흐름도</h3>
+            <div class="diagram-container">
+                <div class="mermaid">
+                    graph LR
+                    A[NCP 콘솔] -->|서버 생성| B(Ubuntu OS)
+                    B -->|네트워크 설정| C{공인 IP & ACG}
+                    C -->|접속| D[SSH 접속]
+                    D -->|설치| E[Node.js v22]
+                    E -->|설치| F[PM2]
+                    F -->|디렉토리| G[/root/my-app]
+                    style A fill:#0f172a,stroke:#38bdf8,stroke-width:2px,color:#fff
+                    style B fill:#1e293b,stroke:#fff,color:#fff
+                    style C fill:#334155,stroke:#fb923c,color:#fff
+                    style G fill:#064e3b,stroke:#4ade80,color:#fff
+                </div>
+            </div>
+
+            <h3>[B] 작업 이력 및 설정 상세</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>순번</th>
+                            <th>구분</th>
+                            <th>상세 내용</th>
+                            <th>명령어 / 비고</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>01</td>
+                            <td>인스턴스</td>
+                            <td>NCP 콘솔에서 Ubuntu 20.04/22.04 기반 서버 생성</td>
+                            <td>Micro/Standard 스펙</td>
+                        </tr>
+                        <tr>
+                            <td>02</td>
+                            <td>네트워크</td>
+                            <td>공인 IP 할당 및 포트 포워딩 설정</td>
+                            <td>SSH(22), Web(3000) 오픈</td>
+                        </tr>
+                        <tr>
+                            <td>03</td>
+                            <td>방화벽</td>
+                            <td>0.0.0.0/0 대상 Inbound 규칙 추가</td>
+                            <td><span class="highlight">[중요] 3000번 포트 허용</span></td>
+                        </tr>
+                        <tr>
+                            <td>04</td>
+                            <td>Node.js</td>
+                            <td>[시행착오] v18 EOL 경고로 <b>v22 (LTS)</b> 변경 설치</td>
+                            <td><code>curl ... setup_22.x</code></td>
+                        </tr>
+                        <tr>
+                            <td>05</td>
+                            <td>PM2</td>
+                            <td>무중단 프로세스 관리를 위한 PM2 전역 설치</td>
+                            <td><code>npm install -g pm2</code></td>
+                        </tr>
+                        <tr>
+                            <td>06</td>
+                            <td>경로</td>
+                            <td>배포 파일이 위치할 디렉토리 생성</td>
+                            <td><code>mkdir -p /root/my-app</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="card">
+            <h2>2. CI/CD 파이프라인 (GitHub Actions)</h2>
+
+            <h3>[A] 배포 시퀀스 (Architecture)</h3>
+            <div class="diagram-container">
+                <div class="mermaid">
+                    sequenceDiagram
+                    participant Local as 💻 Local PC
+                    participant Git as 🐙 GitHub Repo
+                    participant Action as ⚙️ Actions
+                    participant Server as 🖥️ NCP Server
+
+                    Local->>Git: Push (Code + lock file)
+                    Git->>Action: Trigger 'deploy.yml'
+                    
+                    rect rgba(56, 189, 248, 0.1)
+                        Note over Action: [BUILD PHASE]
+                        Action->>Action: Node.js v22 Setup
+                        Action->>Action: npm ci (Install Deps)
+                    end
+
+                    rect rgba(74, 222, 128, 0.1)
+                        Note over Action, Server: [DEPLOY PHASE]
+                        Action->>Server: SCP (File Transfer)
+                        Action->>Server: SSH (Commands)
+                        Server->>Server: npm install --prod
+                        Server->>Server: pm2 reload
+                    end
+                </div>
+            </div>
+
+            <h3>[B] 단계별 구성 및 중요 체크포인트</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>단계</th>
+                            <th>작업 항목</th>
+                            <th>[CRITICAL] 중요 체크포인트</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Step 1</td>
+                            <td>로컬 준비</td>
+                            <td><code>package-lock.json</code> 필수, <code>.gitignore</code>에 node_modules 포함</td>
+                        </tr>
+                        <tr>
+                            <td>Step 2</td>
+                            <td>키 생성</td>
+                            <td>PEM 형식(<code>-m PEM</code>), <b>비밀번호 없이(Enter)</b> 생성</td>
+                        </tr>
+                        <tr>
+                            <td>Step 3</td>
+                            <td>서버 등록</td>
+                            <td>공개키(.pub)를 <code>authorized_keys</code>에 등록 및 권한 600</td>
+                        </tr>
+                        <tr>
+                            <td>Step 4</td>
+                            <td>Secrets</td>
+                            <td>GitHub <b>Repository Secrets</b>에 Private Key 전체 복사</td>
+                        </tr>
+                        <tr>
+                            <td>Step 5</td>
+                            <td>Workflow</td>
+                            <td>Node v22, Port 등 환경변수 일치 확인</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="card">
+            <h2>3. 트러블슈팅 (Troubleshooting)</h2>
+            
+            <div class="issue-box">
+                <span class="issue-title">[ISSUE 1] Dependencies lock file is not found</span>
+                <ul>
+                    <li><b>원인:</b> Git 저장소에 package-lock.json 파일이 없음</li>
+                    <li><b>해결:</b> 로컬에서 npm install 후 생성된 파일을 Push</li>
+                </ul>
+            </div>
+
+            <div class="issue-box">
+                <span class="issue-title">[ISSUE 2] ssh: handshake failed / no key found</span>
+                <ul>
+                    <li><b>원인:</b> 구형 OpenSSH 키 형식이 아님 OR 공개키를 Secrets에 등록함</li>
+                    <li><b>해결:</b> <code>ssh-keygen -m PEM</code> 옵션 사용 / Private Key 등록</li>
+                </ul>
+            </div>
+
+            <div class="issue-box">
+                <span class="issue-title">[ISSUE 3] ssh: passphrase protected</span>
+                <ul>
+                    <li><b>원인:</b> 키 생성 시 비밀번호를 설정함</li>
+                    <li><b>해결:</b> 키 생성 시 암호 입력란에서 <b>그냥 Enter</b> 입력</li>
+                </ul>
+            </div>
+
+            <div class="issue-box">
+                <span class="issue-title">[ISSUE 4] 접속 불가 (Timeout)</span>
+                <ul>
+                    <li><b>원인:</b> 방화벽(NCP ACG, UFW)에서 포트가 닫혀있음</li>
+                    <li><b>해결:</b> NCP 콘솔 및 서버 내부에서 <b>3000번 포트 허용</b></li>
+                </ul>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Theme Management Logic
+        const body = document.body;
+        
+        function setTheme(themeName) {
+            body.setAttribute('data-theme', themeName);
+            localStorage.setItem('selectedTheme', themeName);
+            
+            // Re-render diagrams if needed (simple refresh for demo)
+            // In a complex app, we might reload mermaid config
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('selectedTheme');
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else {
+                // Auto Day/Night based on hour
+                const hour = new Date().getHours();
+                const isDay = hour > 6 && hour < 18;
+                setTheme(isDay ? 'day' : 'night');
+            }
+        }
+
+        // 3D Tilt Effect Logic (Vanilla JS)
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -2; // Max 2deg rotation
+                const rotateY = ((x - centerX) / centerX) * 2;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+            });
+        });
+
+        // Initialize
+        loadTheme();
+    </script>
+</body>
+</html>

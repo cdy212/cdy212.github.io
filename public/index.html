@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 대한내분비학회 추계학술대회</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body class="medical-theme">
+
+    <div class="animation-bg" id="animationBg">
+        <div class="aurora-blob aurora-blob-1"></div>
+        <div class="aurora-blob aurora-blob-2"></div>
+        <div class="aurora-blob aurora-blob-3"></div>
+    </div>
+
+    <div class="theme-selector">
+        <button class="theme-btn active" data-theme="medical" title="Premium Medical">
+            <i class="fas fa-dna"></i>
+        </button>
+        <button class="theme-btn" data-theme="dark" title="Dark Mode">
+            <i class="fas fa-moon"></i>
+        </button>
+        <button class="theme-btn" data-theme="red" title="Red Mode">
+            <i class="fas fa-fire"></i>
+        </button>
+        <button class="theme-btn" data-theme="light" title="Light Mode">
+            <i class="fas fa-sun"></i>
+        </button>
+        <div class="theme-divider"></div>
+        <button class="animation-toggle-btn active" id="animationToggle" title="Animation Toggle">
+            <i class="fas fa-sparkles"></i>
+        </button>
+    </div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#hero" class="logo">
+                <div class="logo-orb"></div>
+                <span>KES <span class="logo-accent">2025</span></span>
+            </a>
+
+            <div class="nav-menu">
+                <a href="#hero" class="nav-link active">홈</a>
+                <a href="#invitation" class="nav-link">초대의 글</a>
+                <a href="#program" class="nav-link">프로그램</a>
+                <a href="#location" class="nav-link">오시는길</a>
+            </div>
+
+            <div class="nav-actions">
+                <a href="#check" class="action-link" title="등록확인">
+                    <i class="fas fa-search"></i>
+                    <span>확인</span>
+                </a>
+                <button class="nav-btn-compact" onclick="location.href='#registration'" title="사전등록">
+                    <span>등록</span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div class="hamburger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero" class="hero">
+        <div class="banner-carousel-container fade-in-up">
+            <div class="banner-carousel glass-card">
+                <div class="carousel-track">
+                    <div class="carousel-slide"><img src="0g.jpg" alt="Banner 1"></div>
+                    <div class="carousel-slide"><img src="1.png" alt="Banner 2"></div>
+                    <div class="carousel-slide"><img src="2.png" alt="Banner 3"></div>
+                    <div class="carousel-slide"><img src="3.png" alt="Banner 4"></div>                
+                </div>
+                <div class="carousel-controls-wrapper" style="justify-content: center;">
+                    <button class="carousel-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
+                    <div class="carousel-indicators">
+                        <span class="indicator active" data-index="0"></span>
+                        <span class="indicator" data-index="1"></span>
+                        <span class="indicator" data-index="2"></span>
+                        <span class="indicator" data-index="3"></span>
+                    </div>
+                    <button class="carousel-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div class="banner-info-panel glass-card">
+                <div class="info-badge">
+                    <span class="badge-dot"></span> NOW REGISTERING
+                </div>
+                <h1 class="info-title">Beyond the <br><span class="highlight">Barriers</span></h1>
+                <p class="info-subtitle">2025 대한내분비학회 추계학술대회</p>
+                <div class="info-details">
+                    <div class="detail-item"><i class="far fa-calendar-alt"></i> 2025. 10. 30 - 11. 01</div>
+                    <div class="detail-item"><i class="fas fa-map-marker-alt"></i> 롯데호텔 부산</div>
+                </div>
+                <div class="info-buttons">
+                    <a href="#registration" class="btn btn-primary">등록하기</a>
+                    <a href="#program" class="btn btn-outline">일정표</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="quick-access content-section">
+        <div class="container">
+            <div class="cards-grid">
+                <div class="glass-card fade-in-up stagger-1">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-microphone-alt"></i></div>
+                        <h3>학술 프로그램</h3>
+                    </div>
+                    <p>기초와 임상을 아우르는 심도 깊은 강연</p>
+                    <div class="card-arrow">자세히 보기 <i class="fas fa-arrow-right"></i></div>
+                </div>
+                <div class="glass-card fade-in-up stagger-2">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-edit"></i></div>
+                        <h3>초록 접수</h3>
+                    </div>
+                    <p>연구 성과를 공유하는 기회의 장</p>
+                    <div class="card-arrow">접수 바로가기 <i class="fas fa-arrow-right"></i></div>
+                </div>
+                <div class="glass-card fade-in-up stagger-3">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fas fa-hotel"></i></div>
+                        <h3>숙박 안내</h3>
+                    </div>
+                    <p>참가자를 위한 특별 할인 혜택</p>
+                    <div class="card-arrow">예약 안내 <i class="fas fa-arrow-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="invitation" class="content-section" style="padding-top: 1rem">
+        <div class="container">
+            <h2 class="section-title fade-in-up">초대의 글</h2>
+            <div class="glass-card section-content fade-in-up" style="padding: 3rem;">
+                <p style="margin-bottom: 1rem; font-size: 1.1rem; color: var(--text-secondary);">
+                    존경하는 회원 여러분,
+                </p>
+                <p style="margin-bottom: 1rem; line-height: 1.8; color: var(--text-secondary);">
+                    2025년 대한내분비학회 추계학술대회에 오신 것을 환영합니다.
+                    이번 학술대회는 <strong>"Beyond the Barriers"</strong>라는 슬로건 아래,
+                    내분비학의 미래를 조망하고 새로운 지평을 여는 뜻깊은 자리가 될 것입니다.
+                </p>
+                <div class="signature" style="text-align: right; margin-top: 2rem;">
+                    <img src="" alt="" style="height: 50px; opacity: 0.8;"> <p>대한내분비학회 이사장 <strong>홍 길 동</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section id="program" class="content-section" style="margin-bottom: 100px; padding-top: 1rem;">
+        <div class="container">
+            <h2 class="section-title fade-in-up">Program at a Glance</h2>
+            
+            <div class="glass-card fade-in-up program-container">
+                
+                <div class="program-tabs">
+                    <button class="tab-btn active" onclick="switchDay('day1')">10월 30일(목)</button>
+                    <button class="tab-btn" onclick="switchDay('day2')">10월 31일(금)</button>
+                </div>
+
+                <div class="timeline-preview" id="day1-preview">
+                    <div class="timeline-item">
+                        <div class="time-badge">13:00</div>
+                        <div class="session-info">
+                            <h4>Opening Ceremony</h4>
+                            <p>Grand Ballroom | Opening Remarks</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item highlight">
+                        <div class="time-badge">14:30</div>
+                        <div class="session-info">
+                            <span class="tag-badge">Plenary</span>
+                            <h4>Special Interest Group: Cortisol Update</h4>
+                            <p>Room 1 | Prof. James Bond</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="time-badge">16:30</div>
+                        <div class="session-info">
+                            <span class="tag-badge gold">Award</span>
+                            <h4>송원의학자상 강연</h4>
+                            <p>Room 3 | Award Lecture</p>
+                        </div>
+                    </div>
+                    
+                    <div class="view-more-overlay">
+                        <button class="btn-glow" onclick="openProgramModal()">
+                            <i class="fas fa-expand-arrows-alt"></i> 전체 일정표 크게 보기
+                        </button>
+                    </div>
+                </div>
+
+                <div class="timeline-preview hidden" id="day2-preview">
+                    <div class="timeline-item">
+                        <div class="time-badge">09:00</div>
+                        <div class="session-info">
+                            <h4>Symposium: Thyroid Cancer</h4>
+                            <p>Room 1 | Morning Session</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item highlight">
+                        <div class="time-badge">11:00</div>
+                        <div class="session-info">
+                            <span class="tag-badge">Keynote</span>
+                            <h4>Future of Endocrinology</h4>
+                            <p>Grand Ballroom | Prof. Alice Kim</p>
+                        </div>
+                    </div>
+                    <div class="view-more-overlay">
+                        <button class="btn-glow" onclick="openProgramModal()">
+                            <i class="fas fa-expand-arrows-alt"></i> 전체 일정표 크게 보기
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="programModal" class="modal-backdrop">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3>Detailed Schedule</h3>
+                <button class="close-btn" onclick="closeProgramModal()"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="program-tabs modal-tabs">
+                    <button class="tab-btn active" data-target="modal-day1">Day 1 (10.30)</button>
+                    <button class="tab-btn" data-target="modal-day2">Day 2 (10.31)</button>
+                </div>
+
+                <div class="schedule-grid active" id="modal-day1">
+                    <div class="grid-header">
+                        <div class="grid-cell time-col">Time</div>
+                        <div class="grid-cell room-col">Room 1</div>
+                        <div class="grid-cell room-col">Room 2</div>
+                        <div class="grid-cell room-col">Room 3</div>
+                        <div class="grid-cell room-col">Room 4</div>
+                    </div>
+                    
+                    <div class="grid-row">
+                        <div class="grid-cell time-col">14:00</div>
+                        <div class="grid-cell" style="grid-column: span 4; text-align: center; background: rgba(255,255,255,0.05);">
+                            Registration & Opening
+                        </div>
+                    </div>
+
+                    <div class="grid-row">
+                        <div class="grid-cell time-col">14:30<br>~<br>16:00</div>
+                        <div class="grid-cell session-blue">
+                            <span class="session-tag">Symposium 1</span>
+                            <strong>Serum Cortisol Update</strong>
+                            <small>Salivary Steroids</small>
+                        </div>
+                        <div class="grid-cell session-empty"></div>
+                        <div class="grid-cell session-pink">
+                            <span class="session-tag">Young Scientist</span>
+                            <strong>Symposium</strong>
+                            <small>Rising Stars</small>
+                        </div>
+                        <div class="grid-cell session-empty"></div>
+                    </div>
+
+                    <div class="grid-row">
+                        <div class="grid-cell time-col">16:00</div>
+                        <div class="grid-cell break-time" style="grid-column: span 4;">Coffee Break</div>
+                    </div>
+
+                    <div class="grid-row">
+                        <div class="grid-cell time-col">16:30<br>~<br>18:00</div>
+                        <div class="grid-cell session-blue">
+                            <span class="session-tag">SIG</span>
+                            <strong>Metabolism & Muscle</strong>
+                            <small>Rethinking the axis</small>
+                        </div>
+                        <div class="grid-cell session-blue">
+                            <span class="session-tag">SIG</span>
+                            <strong>Maternal Health</strong>
+                            <small>Environmental Exposures</small>
+                        </div>
+                        <div class="grid-cell session-gold">
+                            <span class="session-tag">Plenary</span>
+                            <strong>송원의학자상 강연</strong>
+                            <small>Award Lecture</small>
+                        </div>
+                        <div class="grid-cell session-empty"></div>
+                    </div>
+                </div>
+
+                <div class="schedule-grid" id="modal-day2">
+                    <div class="grid-header">
+                        <div class="grid-cell time-col">Time</div>
+                        <div class="grid-cell room-col">Room 1</div>
+                        <div class="grid-cell room-col">Room 2</div>
+                        <div class="grid-cell room-col">Room 3</div>
+                    </div>
+                     <div class="grid-row">
+                        <div class="grid-cell time-col">09:00</div>
+                        <div class="grid-cell session-pink">
+                            <strong>Thyroid Cancer</strong>
+                            <small>New Guidelines</small>
+                        </div>
+                        <div class="grid-cell session-blue">
+                            <strong>Diabetes Tech</strong>
+                            <small>CGM & Pumps</small>
+                        </div>
+                        <div class="grid-cell session-empty"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+<section id="registration" class="content-section" style="padding-top: 2rem;">
+        <div class="container">
+            <h2 class="section-title fade-in-up">Online Registration</h2>
+            
+            <div class="glass-card fade-in-up registration-card">
+                <div class="form-header-compact">
+                    <div class="header-title"><i class="fas fa-edit"></i> 사전등록 신청</div>
+                    <div class="header-desc">필수 입력항목(*)을 정확히 기재해 주세요.</div>
+                </div>
+
+                <form id="regForm">
+                    <div class="form-grid-row">
+                        <div class="form-group">
+                            <label class="compact-label required">이름</label>
+                            <input type="text" class="glass-input" placeholder="홍길동" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="compact-label required">소속</label>
+                            <input type="text" class="glass-input" placeholder="병원명 또는 소속기관" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-row">
+                        <div class="form-group">
+                            <label class="compact-label required">핸드폰</label>
+                            <input type="tel" class="glass-input" placeholder="010-0000-0000" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="compact-label required">이메일</label>
+                            <input type="email" class="glass-input" placeholder="example@email.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-row">
+                        <div class="form-group">
+                            <label class="compact-label required">면허번호</label>
+                            <input type="text" class="glass-input" placeholder="면허번호 입력">
+                        </div>
+                        <div class="form-group">
+                            <label class="compact-label required">결제수단</label>
+                            <div class="payment-option">
+                                <label class="custom-radio">
+                                    <input type="radio" name="payment" checked>
+                                    <span class="radio-mark"></span>
+                                    <span class="radio-text">신용카드</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width-group">
+                        <label class="compact-label required">참가자 구분 (비용 자동계산)</label>
+                        <div class="radio-grid-compact">
+                            <label class="custom-radio">
+                                <input type="radio" name="category" data-fee="50000" checked>
+                                <span class="radio-mark"></span>
+                                <span class="radio-text">전문의 (5만)</span>
+                            </label>
+                            <label class="custom-radio">
+                                <input type="radio" name="category" data-fee="50000">
+                                <span class="radio-mark"></span>
+                                <span class="radio-text">일반의 (5만)</span>
+                            </label>
+                            <label class="custom-radio">
+                                <input type="radio" name="category" data-fee="0">
+                                <span class="radio-mark"></span>
+                                <span class="radio-text">전공의 (무료)</span>
+                            </label>
+                            <label class="custom-radio">
+                                <input type="radio" name="category" data-fee="10000">
+                                <span class="radio-mark"></span>
+                                <span class="radio-text">공보의/군의관 (1만)</span>
+                            </label>
+                            <label class="custom-radio">
+                                <input type="radio" name="category" data-fee="10000">
+                                <span class="radio-mark"></span>
+                                <span class="radio-text">간호사/영양사 (1만)</span>
+                            </label>
+                            <label class="custom-radio">
+                                <input type="radio" name="category" data-fee="10000">
+                                <span class="radio-mark"></span>
+                                <span class="radio-text">연구원/기타 (1만)</span>
+                            </label>
+                            <label class="custom-radio full-span">
+                                <input type="radio" name="category" data-fee="100000">
+                                <span class="radio-mark"></span>
+                                <span class="radio-text">의료관련 업체 임직원 (100,000원)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-footer-bar">
+                        <div class="total-fee-wrapper">
+                            <span class="fee-label">총 등록비용:</span>
+                            <input type="text" id="totalFee" class="fee-display" value="50,000" readonly>
+                            <span class="currency">원</span>
+                        </div>
+                        <button type="submit" class="btn-glow submit-btn-compact">
+                            등록하기 <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer glass-card" style="border-radius: 0; margin-top: 4rem; border-left: none; border-right: none; border-bottom: none;">
+        <div class="container" style="padding: 3rem 2rem;">
+            <div class="footer-grid">
+                <div>
+                    <h4 style="color: var(--text-primary); margin-bottom: 1rem;">KES 2025</h4>
+                    <p style="color: var(--text-muted);">대한내분비학회 사무국</p>
+                </div>
+                <div style="text-align: right;">
+                    <p style="color: var(--text-muted);">Copyright © KES. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
